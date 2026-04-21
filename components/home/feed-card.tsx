@@ -49,7 +49,7 @@ export const FEED: FeedItem[] = [
     title: 'Bundesliga: Favoritendämmerung am 30. Spieltag',
     dek: 'Drei Topspiele am Wochenende — wir zeigen die taktischen Entscheidungen, auf die es ankommt.',
     meta: 'vor 2 Std.',
-    img: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800&q=80',
+    img: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&q=80',
   },
   {
     kicker: 'Reise',
