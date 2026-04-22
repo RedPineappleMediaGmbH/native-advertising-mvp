@@ -16,10 +16,9 @@ Trigger the complete daily article generation pipeline from the local machine. T
 ## Preconditions
 
 1. `.env.local` in the project root contains:
-   - `ANTHROPIC_API_KEY`
    - `GEMINI_API_KEY`
 
-   If either is missing, ask the user to add them before proceeding.
+   If missing, ask the user to add it before proceeding. Article text is generated via the Claude Code CLI (no Anthropic API key needed).
 
 2. Git working tree is clean (or user acknowledges they want to mix generated commits with uncommitted changes).
 

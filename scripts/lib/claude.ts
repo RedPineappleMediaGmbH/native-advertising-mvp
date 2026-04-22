@@ -1,4 +1,7 @@
-import Anthropic from '@anthropic-ai/sdk';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+
+const execFileAsync = promisify(execFile);
 
 export const CATEGORIES = ['Wirtschaft', 'Panorama', 'Digital', 'Sport', 'Reise', 'Eilmeldung'] as const;
 export type Category = typeof CATEGORIES[number];
@@ -15,22 +18,16 @@ export interface GeneratedArticle {
   body: string;
 }
 
-let _client: Anthropic | null = null;
-
-function client(): Anthropic {
-  if (!_client) {
-    const apiKey = process.env.ANTHROPIC_API_KEY;
-    if (!apiKey) throw new Error('ANTHROPIC_API_KEY not set');
-    _client = new Anthropic({ apiKey });
-  }
-  return _client;
+async function claudePrompt(prompt: string, timeoutMs = 120_000): Promise<string> {
+  const { stdout } = await execFileAsync(
+    'claude',
+    ['-p', prompt],
+    { maxBuffer: 10 * 1024 * 1024, timeout: timeoutMs }
+  );
+  return stdout.trim();
 }
 
-const TOPIC_MODEL = process.env.ANTHROPIC_TOPIC_MODEL ?? 'claude-haiku-4-5';
-const TEXT_MODEL = process.env.ANTHROPIC_TEXT_MODEL ?? 'claude-sonnet-4-6';
-
 export async function pickTopics(count: number, dateSeed: string): Promise<TopicSpec[]> {
-  const anthropic = client();
   const prompt = `Du bist Redakteur bei der deutschen Online-Zeitung Tagesblick. Erzeuge ${count} plausible, aktuelle Nachrichtenthemen für heute (${dateSeed}), je eines pro Kategorie. Wähle aus: ${CATEGORIES.join(', ')}.
 
 Regeln:
@@ -42,13 +39,7 @@ Regeln:
 Antworte ausschließlich als JSON-Array in dieser Form:
 [{"category":"Wirtschaft","topic":"kurze Themenbezeichnung","angle":"konkreter journalistischer Blickwinkel in einem Satz"}]`;
 
-  const response = await anthropic.messages.create({
-    model: TOPIC_MODEL,
-    max_tokens: 1500,
-    messages: [{ role: 'user', content: prompt }],
-  });
-
-  const text = response.content.filter(b => b.type === 'text').map(b => (b as { text: string }).text).join('');
+  const text = await claudePrompt(prompt);
   const match = text.match(/\[[\s\S]*\]/);
   if (!match) throw new Error(`Topic response had no JSON array:\n${text}`);
 
@@ -70,7 +61,6 @@ Antworte ausschließlich als JSON-Array in dieser Form:
 }
 
 export async function writeArticle(spec: TopicSpec): Promise<GeneratedArticle> {
-  const anthropic = client();
   const prompt = `Du schreibst einen redaktionellen Artikel für die deutsche Online-Zeitung Tagesblick.
 
 Kategorie: ${spec.category}
@@ -93,13 +83,7 @@ Antworte als JSON:
   "body": "Markdown-Fließtext mit ## Zwischenüberschriften"
 }`;
 
-  const response = await anthropic.messages.create({
-    model: TEXT_MODEL,
-    max_tokens: 3000,
-    messages: [{ role: 'user', content: prompt }],
-  });
-
-  const text = response.content.filter(b => b.type === 'text').map(b => (b as { text: string }).text).join('');
+  const text = await claudePrompt(prompt, 300_000);
   const match = text.match(/\{[\s\S]*\}/);
   if (!match) throw new Error(`Article response had no JSON:\n${text}`);
 

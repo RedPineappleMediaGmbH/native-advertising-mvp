@@ -19,7 +19,7 @@ The user provides a topic in the form `Category: Topic` (e.g. `Sport: Champions 
 ## Workflow
 
 1. Confirm the interpreted `category` and `topic` with the user in one short sentence
-2. Ensure `.env.local` in the project root contains `ANTHROPIC_API_KEY` and `GEMINI_API_KEY`. If missing, ask the user to add them before proceeding
+2. Ensure `.env.local` in the project root contains `GEMINI_API_KEY`. If missing, ask the user to add it before proceeding. Article text is generated via the Claude Code CLI (no API key needed)
 3. Run a one-article generation:
 
 ```bash
