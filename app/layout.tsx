@@ -3,6 +3,7 @@ import { Inter, Source_Serif_4 } from 'next/font/google';
 import './globals.css';
 import { BrandProvider } from '@/components/brand-context';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <BrandProvider>
           {children}
           <Analytics />
+          <SpeedInsights />
         </BrandProvider>
       </body>
     </html>
