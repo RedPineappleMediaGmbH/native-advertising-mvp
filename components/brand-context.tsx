@@ -14,7 +14,7 @@ interface BrandState {
 const DEFAULTS: BrandState = {
   brandId: 'tagesblick',
   variant: 'A',
-  stickyCta: 'on',
+  stickyCta: 'off',
 };
 
 interface BrandContextValue {
@@ -30,10 +30,6 @@ export function BrandProvider({ children }: { children: ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(LS_KEY);
-      if (raw) setState({ ...DEFAULTS, ...JSON.parse(raw) });
-    } catch {}
     setMounted(true);
   }, []);
 
@@ -41,9 +37,8 @@ export function BrandProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!mounted) return;
-    try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch {}
     applyBrand(brand);
-  }, [state, brand, mounted]);
+  }, [brand, mounted]);
 
   const setTweak = (key: keyof BrandState, val: string) => {
     setState(s => ({ ...s, [key]: val }));
