@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Inter, Source_Serif_4 } from 'next/font/google';
 import './globals.css';
 import { BrandProvider } from '@/components/brand-context';
+import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body style={{ fontFamily: 'var(--font-inter), system-ui, sans-serif' }}>
         <BrandProvider>
           {children}
+          <Analytics />
         </BrandProvider>
       </body>
     </html>
