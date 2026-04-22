@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter, Source_Serif_4 } from 'next/font/google';
 import './globals.css';
 import { BrandProvider } from '@/components/brand-context';
@@ -19,6 +19,11 @@ const sourceSerif = Source_Serif_4({
 export const metadata: Metadata = {
   title: 'Tagesblick — Nachrichten & Hintergründe',
   description: 'Native advertising MVP — fictional German news publisher',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
