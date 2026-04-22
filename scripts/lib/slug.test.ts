@@ -25,4 +25,8 @@ describe('toSlug', () => {
   it('trims leading/trailing dashes', () => {
     expect(toSlug('  -Hello World-  ')).toBe('hello-world');
   });
+
+  it('strips non-German diacritics via NFD normalization', () => {
+    expect(toSlug('Café au lait')).toBe('cafe-au-lait');
+  });
 });
