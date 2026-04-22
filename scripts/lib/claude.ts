@@ -1,6 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk';
 
-const CATEGORIES = ['Wirtschaft', 'Panorama', 'Digital', 'Sport', 'Reise', 'Eilmeldung'] as const;
+export const CATEGORIES = ['Wirtschaft', 'Panorama', 'Digital', 'Sport', 'Reise', 'Eilmeldung'] as const;
 export type Category = typeof CATEGORIES[number];
 
 export interface TopicSpec {
@@ -15,10 +15,15 @@ export interface GeneratedArticle {
   body: string;
 }
 
+let _client: Anthropic | null = null;
+
 function client(): Anthropic {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) throw new Error('ANTHROPIC_API_KEY not set');
-  return new Anthropic({ apiKey });
+  if (!_client) {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) throw new Error('ANTHROPIC_API_KEY not set');
+    _client = new Anthropic({ apiKey });
+  }
+  return _client;
 }
 
 const TOPIC_MODEL = process.env.ANTHROPIC_TOPIC_MODEL ?? 'claude-haiku-4-5';
@@ -47,8 +52,21 @@ Antworte ausschließlich als JSON-Array in dieser Form:
   const match = text.match(/\[[\s\S]*\]/);
   if (!match) throw new Error(`Topic response had no JSON array:\n${text}`);
 
-  const parsed = JSON.parse(match[0]) as TopicSpec[];
-  return parsed.slice(0, count);
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(match[0]);
+  } catch {
+    throw new Error(`Topic response contained invalid JSON:\n${match[0]}`);
+  }
+  if (!Array.isArray(parsed)) throw new Error('Topic response was not a JSON array');
+  const valid = (parsed as TopicSpec[]).filter(t =>
+    typeof t.category === 'string' &&
+    CATEGORIES.includes(t.category as Category) &&
+    typeof t.topic === 'string' && t.topic &&
+    typeof t.angle === 'string' && t.angle
+  );
+  if (valid.length === 0) throw new Error(`No valid topics in response: ${JSON.stringify(parsed)}`);
+  return valid.slice(0, count);
 }
 
 export async function writeArticle(spec: TopicSpec): Promise<GeneratedArticle> {
@@ -85,7 +103,12 @@ Antworte als JSON:
   const match = text.match(/\{[\s\S]*\}/);
   if (!match) throw new Error(`Article response had no JSON:\n${text}`);
 
-  const parsed = JSON.parse(match[0]) as GeneratedArticle;
+  let parsed: GeneratedArticle;
+  try {
+    parsed = JSON.parse(match[0]) as GeneratedArticle;
+  } catch {
+    throw new Error(`Article response contained invalid JSON:\n${match[0]}`);
+  }
   if (!parsed.title || !parsed.dek || !parsed.body) {
     throw new Error(`Article response missing fields: ${JSON.stringify(parsed)}`);
   }
