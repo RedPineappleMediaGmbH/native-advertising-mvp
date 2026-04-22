@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const article = getArticleBySlug(slug);
-  if (!article) notFound();
+  if (!article) return notFound();
 
   const brand = BRANDS.find(b => b.id === 'tagesblick')!;
   const serif = { fontFamily: 'var(--font-source-serif), Georgia, serif' } as const;
