@@ -1,40 +1,40 @@
-'use client';
+import { getAllArticles } from '@/lib/articles';
+import HomeView from '@/components/home/home-view';
+import type { FeedItem } from '@/components/home/feed-card';
 
-import { useRouter } from 'next/navigation';
-import { useBrand } from '@/components/brand-context';
-import { useCtaToast } from '@/hooks/use-cta-toast';
-import PubTopbar from '@/components/home/pub-topbar';
-import BreakingTicker from '@/components/home/breaking-ticker';
-import HeroArticle from '@/components/home/hero-article';
-import FeedCard, { FEED } from '@/components/home/feed-card';
-import Sidebar from '@/components/home/sidebar';
-import PubFooter from '@/components/home/pub-footer';
+function relativeTime(dateStr: string): string {
+  const d = new Date(dateStr);
+  const diffDays = Math.floor((Date.now() - d.getTime()) / (1000 * 60 * 60 * 24));
+  if (diffDays <= 0) return 'heute';
+  if (diffDays === 1) return 'gestern';
+  return `vor ${diffDays} Tagen`;
+}
 
 export default function HomePage() {
-  const router = useRouter();
-  const { brand } = useBrand();
-  useCtaToast();
+  const articles = getAllArticles().slice(0, 5);
 
-  return (
-    <>
-      <PubTopbar brand={brand} />
-      <main className="home">
-        <BreakingTicker />
-        <div>
-          <HeroArticle />
-          <div className="feed">
-            {FEED.map((item, i) => (
-              <FeedCard
-                key={i}
-                item={item}
-                onOpenAdvertorial={() => router.push('/advertorial')}
-              />
-            ))}
-          </div>
-        </div>
-        <Sidebar />
-      </main>
-      <PubFooter brand={brand} />
-    </>
-  );
+  const feed: FeedItem[] = articles.map(a => ({
+    kicker: a.kicker,
+    title: a.title,
+    dek: a.dek,
+    meta: relativeTime(a.date),
+    img: a.image,
+    href: `/artikel/${a.slug}`,
+  }));
+
+  const sponsored: FeedItem = {
+    sponsored: true,
+    partner: 'easyJet',
+    kicker: 'Anzeige',
+    title: 'Fünf europäische Städte, die Sie diesen Sommer für unter 50€ erreichen können',
+    dek: 'Lissabon, Porto, Athen, Krakau, Valletta — wir zeigen, welche Destinationen 2026 das beste Preis-Erlebnis bieten.',
+    meta: 'Präsentiert von easyJet',
+    img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
+  };
+
+  const feedWithAd: FeedItem[] = feed.length >= 2
+    ? [...feed.slice(0, 2), sponsored, ...feed.slice(2)]
+    : [...feed, sponsored];
+
+  return <HomeView feed={feedWithAd} />;
 }

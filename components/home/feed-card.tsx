@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 export interface FeedItem {
   kicker: string;
   title: string;
@@ -9,56 +11,8 @@ export interface FeedItem {
   label?: string;
   sponsored?: boolean;
   partner?: string;
+  href?: string;
 }
-
-export const FEED: FeedItem[] = [
-  {
-    kicker: 'Wirtschaft',
-    title: 'EZB hält an vorsichtiger Zinspolitik fest — Lagarde dämpft Erwartungen',
-    dek: 'Die Notenbank belässt den Leitzins unverändert und verweist auf hartnäckige Kerninflation.',
-    meta: 'vor 12 Min.',
-    img: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80',
-    label: 'Analyse',
-  },
-  {
-    kicker: 'Panorama',
-    title: 'Warnstreik legt Frankfurter Flughafen zeitweise lahm',
-    dek: 'Tausende Passagiere strandeten am Morgen — Gewerkschaft fordert höhere Löhne für Bodendienste.',
-    meta: 'vor 34 Min.',
-    img: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80',
-    label: 'Eilmeldung',
-  },
-  {
-    sponsored: true,
-    partner: 'easyJet',
-    kicker: 'Anzeige',
-    title: 'Fünf europäische Städte, die Sie diesen Sommer für unter 50€ erreichen können',
-    dek: 'Lissabon, Porto, Athen, Krakau, Valletta — wir zeigen, welche Destinationen 2026 das beste Preis-Erlebnis bieten.',
-    meta: 'Präsentiert von easyJet',
-    img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
-  },
-  {
-    kicker: 'Digital',
-    title: 'Neuer EU-Standard: USB-C wird Pflicht auch für Laptops ab 2027',
-    dek: 'Brüssel erweitert die Vereinheitlichung — was Hersteller und Verbraucher jetzt wissen müssen.',
-    meta: 'vor 1 Std.',
-    img: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80',
-  },
-  {
-    kicker: 'Sport',
-    title: 'Bundesliga: Favoritendämmerung am 30. Spieltag',
-    dek: 'Drei Topspiele am Wochenende — wir zeigen die taktischen Entscheidungen, auf die es ankommt.',
-    meta: 'vor 2 Std.',
-    img: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&q=80',
-  },
-  {
-    kicker: 'Reise',
-    title: 'Die schönsten Küstenorte Europas für den Sommer 2026',
-    dek: 'Von der Algarve bis zur kroatischen Adria — unser Reiseredakteur hat die verborgenen Perlen.',
-    meta: 'vor 3 Std.',
-    img: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=80',
-  },
-];
 
 export default function FeedCard({ item, onOpenAdvertorial }: { item: FeedItem; onOpenAdvertorial: () => void }) {
   if (item.sponsored) {
@@ -88,8 +42,9 @@ export default function FeedCard({ item, onOpenAdvertorial }: { item: FeedItem; 
       </article>
     );
   }
-  return (
-    <article className="card">
+
+  const inner = (
+    <>
       <div className="thumb" style={{ overflow: 'hidden' }}>
         <img
           src={item.img}
@@ -109,6 +64,16 @@ export default function FeedCard({ item, onOpenAdvertorial }: { item: FeedItem; 
           <span>{item.meta}</span>
         </div>
       </div>
-    </article>
+    </>
   );
+
+  if (item.href) {
+    return (
+      <Link href={item.href} className="card" style={{ color: 'inherit', textDecoration: 'none' }}>
+        {inner}
+      </Link>
+    );
+  }
+
+  return <article className="card">{inner}</article>;
 }
