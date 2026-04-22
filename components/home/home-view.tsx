@@ -6,7 +6,8 @@ import { useCtaToast } from '@/hooks/use-cta-toast';
 import PubTopbar from '@/components/home/pub-topbar';
 import BreakingTicker from '@/components/home/breaking-ticker';
 import HeroArticle from '@/components/home/hero-article';
-import FeedCard, { type FeedItem } from '@/components/home/feed-card';
+import FeedCard from '@/components/home/feed-card';
+import type { FeedItem } from '@/lib/types';
 import Sidebar from '@/components/home/sidebar';
 import PubFooter from '@/components/home/pub-footer';
 

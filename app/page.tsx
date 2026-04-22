@@ -1,6 +1,6 @@
 import { getAllArticles } from '@/lib/articles';
 import HomeView from '@/components/home/home-view';
-import type { FeedItem } from '@/components/home/feed-card';
+import type { FeedItem } from '@/lib/types';
 
 function relativeTime(dateStr: string): string {
   const d = new Date(dateStr);
