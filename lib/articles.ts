@@ -20,9 +20,14 @@ export function parseArticleFile(filePath: string): Article {
   const raw = fs.readFileSync(filePath, 'utf8');
   const { data, content } = matter(raw);
 
+  // gray-matter auto-coerces unquoted ISO dates to Date objects
+  if (data.date instanceof Date) {
+    data.date = data.date.toISOString().slice(0, 10);
+  }
+
   for (const field of REQUIRED_FIELDS) {
     if (typeof data[field] !== 'string' || !data[field]) {
-      throw new Error(`Missing required frontmatter field "${field}" in ${filePath}`);
+      throw new Error(`Frontmatter field "${field}" is missing or has invalid type in ${filePath}`);
     }
   }
 
@@ -42,9 +47,15 @@ const CONTENT_DIR = path.join(process.cwd(), 'content/articles');
 export function getAllArticles(): Article[] {
   if (!fs.existsSync(CONTENT_DIR)) return [];
   const files = fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.mdx'));
-  return files
-    .map(f => parseArticleFile(path.join(CONTENT_DIR, f)))
-    .sort((a, b) => b.date.localeCompare(a.date));
+  const articles: Article[] = [];
+  for (const f of files) {
+    try {
+      articles.push(parseArticleFile(path.join(CONTENT_DIR, f)));
+    } catch (err) {
+      console.warn(`Skipping malformed article ${f}:`, err);
+    }
+  }
+  return articles.sort((a, b) => b.date.localeCompare(a.date));
 }
 
 export function getArticleBySlug(slug: string): Article | null {
