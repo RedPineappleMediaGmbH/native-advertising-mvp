@@ -28,7 +28,7 @@ export default function HomeView({ feed }: { feed: FeedItem[] }) {
               <FeedCard
                 key={i}
                 item={item}
-                onOpenAdvertorial={() => router.push('/advertorial')}
+                onOpenAdvertorial={() => router.push('/artikel/funf-europaische-stadte-die-sie-diesen-sommer-fur-unter-50-euro-erreichen-konnen')}
               />
             ))}
           </div>
