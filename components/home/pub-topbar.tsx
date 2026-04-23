@@ -5,7 +5,12 @@ import { Brand } from '@/components/brands';
 
 const NAV_ITEMS = ['Politik', 'Wirtschaft', 'Panorama', 'Sport', 'Kultur', 'Digital', 'Reise', 'Wissen'];
 const SUBNAV = ['Schlagzeilen', 'Meistgelesen', 'Meinung', 'Live-Ticker', 'Videos', 'Podcasts'];
-const TODAY = '21. April 2026';
+
+function todayDE(): string {
+  return new Date().toLocaleDateString('de-DE', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+  });
+}
 
 export default function PubTopbar({ brand }: { brand: Brand }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -32,7 +37,7 @@ export default function PubTopbar({ brand }: { brand: Brand }) {
           <div className="pub-logo" style={{ fontFamily: 'var(--font-source-serif), Georgia, serif' }}>
             {brand.logoMark}<span className="dot">.</span>
           </div>
-          <div className="pub-date mobile-hide">Montag, {TODAY}</div>
+          <div className="pub-date mobile-hide" suppressHydrationWarning>{todayDE()}</div>
           <nav className="pub-nav mobile-hide">
             {NAV_ITEMS.map((n, i) => (
               <a key={n} href="#" className={i === 6 ? 'active' : ''}>{n}</a>
