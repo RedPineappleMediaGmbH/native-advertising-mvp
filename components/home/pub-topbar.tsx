@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { Brand } from '@/components/brands';
 
 const NAV_ITEMS = ['Politik', 'Wirtschaft', 'Panorama', 'Sport', 'Kultur', 'Digital', 'Reise', 'Wissen'];
@@ -14,6 +16,10 @@ function todayDE(): string {
 
 export default function PubTopbar({ brand }: { brand: Brand }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const activeCategory = pathname.startsWith('/kategorie/')
+    ? pathname.split('/')[2]
+    : null;
 
   // Lock body scroll when menu is open
   useEffect(() => {
@@ -39,8 +45,8 @@ export default function PubTopbar({ brand }: { brand: Brand }) {
           </div>
           <div className="pub-date mobile-hide" suppressHydrationWarning>{todayDE()}</div>
           <nav className="pub-nav mobile-hide">
-            {NAV_ITEMS.map((n, i) => (
-              <a key={n} href="#" className={i === 6 ? 'active' : ''}>{n}</a>
+            {NAV_ITEMS.map(n => (
+              <Link key={n} href={`/kategorie/${n.toLowerCase()}`} className={activeCategory === n.toLowerCase() ? 'active' : ''}>{n}</Link>
             ))}
           </nav>
           <div className="pub-tools">
@@ -77,10 +83,10 @@ export default function PubTopbar({ brand }: { brand: Brand }) {
           </div>
 
           <nav className="mobile-menu-nav">
-            {NAV_ITEMS.map((n, i) => (
-              <a key={n} href="#" className={i === 6 ? 'active' : ''} onClick={() => setMenuOpen(false)}>
+            {NAV_ITEMS.map(n => (
+              <Link key={n} href={`/kategorie/${n.toLowerCase()}`} className={activeCategory === n.toLowerCase() ? 'active' : ''} onClick={() => setMenuOpen(false)}>
                 {n}
-              </a>
+              </Link>
             ))}
           </nav>
 

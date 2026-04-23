@@ -65,3 +65,9 @@ export function getArticleBySlug(slug: string): Article | null {
 export function getAllSlugs(): string[] {
   return getAllArticles().map(a => a.slug);
 }
+
+export function getArticlesByKicker(kicker: string): Article[] {
+  return getAllArticles().filter(
+    a => a.kicker.toLowerCase() === kicker.toLowerCase()
+  );
+}
