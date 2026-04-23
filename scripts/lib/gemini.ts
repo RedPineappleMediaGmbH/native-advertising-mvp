@@ -2,7 +2,7 @@ import { GoogleGenAI } from '@google/genai';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL ?? 'imagen-3.0-generate-001';
+const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL ?? 'imagen-4.0-generate-001';
 
 let _client: GoogleGenAI | null = null;
 

@@ -1,7 +1,4 @@
-import { execFile } from 'node:child_process';
-import { promisify } from 'node:util';
-
-const execFileAsync = promisify(execFile);
+import { spawn } from 'node:child_process';
 
 export const CATEGORIES = ['Wirtschaft', 'Panorama', 'Digital', 'Sport', 'Reise', 'Eilmeldung'] as const;
 export type Category = typeof CATEGORIES[number];
@@ -18,13 +15,30 @@ export interface GeneratedArticle {
   body: string;
 }
 
-async function claudePrompt(prompt: string, timeoutMs = 120_000): Promise<string> {
-  const { stdout } = await execFileAsync(
-    'claude',
-    ['-p', prompt],
-    { maxBuffer: 10 * 1024 * 1024, timeout: timeoutMs }
-  );
-  return stdout.trim();
+function claudePrompt(prompt: string, timeoutMs = 120_000): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const child = spawn('claude', ['-p', prompt], {
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+
+    let stdout = '';
+    let stderr = '';
+    child.stdout.on('data', (d: Buffer) => { stdout += d; });
+    child.stderr.on('data', (d: Buffer) => { stderr += d; });
+
+    const timer = setTimeout(() => {
+      child.kill();
+      reject(new Error(`claude timed out after ${timeoutMs}ms`));
+    }, timeoutMs);
+
+    child.on('close', (code) => {
+      clearTimeout(timer);
+      if (code === 0) resolve(stdout.trim());
+      else reject(new Error(`claude exited ${code}: ${stderr.trim()}`));
+    });
+
+    child.on('error', reject);
+  });
 }
 
 export async function pickTopics(count: number, dateSeed: string): Promise<TopicSpec[]> {

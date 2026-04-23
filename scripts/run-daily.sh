@@ -24,7 +24,7 @@ set -a
 source .env.local
 set +a
 
-if npm run generate >> "$LOG" 2>&1; then
+if "$PROJECT/node_modules/.bin/tsx" "$PROJECT/scripts/generate-articles.ts" >> "$LOG" 2>&1; then
   log "Generation complete"
 else
   log "ERROR: generation script exited with error"
