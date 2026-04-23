@@ -11,9 +11,11 @@ function relativeTime(dateStr: string): string {
 }
 
 export default function HomePage() {
-  const articles = getAllArticles().slice(0, 5);
+  const articles = getAllArticles();
+  const [hero, ...rest] = articles;
+  const feedArticles = rest.slice(0, 5);
 
-  const feed: FeedItem[] = articles.map(a => ({
+  const feed: FeedItem[] = feedArticles.map(a => ({
     kicker: a.kicker,
     title: a.title,
     dek: a.dek,
@@ -36,5 +38,5 @@ export default function HomePage() {
     ? [...feed.slice(0, 2), sponsored, ...feed.slice(2)]
     : [...feed, sponsored];
 
-  return <HomeView feed={feedWithAd} />;
+  return <HomeView feed={feedWithAd} hero={hero} />;
 }

@@ -8,10 +8,11 @@ import BreakingTicker from '@/components/home/breaking-ticker';
 import HeroArticle from '@/components/home/hero-article';
 import FeedCard from '@/components/home/feed-card';
 import type { FeedItem } from '@/lib/types';
+import type { Article } from '@/lib/articles';
 import Sidebar from '@/components/home/sidebar';
 import PubFooter from '@/components/home/pub-footer';
 
-export default function HomeView({ feed }: { feed: FeedItem[] }) {
+export default function HomeView({ feed, hero }: { feed: FeedItem[]; hero: Article }) {
   const router = useRouter();
   const { brand } = useBrand();
   useCtaToast();
@@ -22,7 +23,7 @@ export default function HomeView({ feed }: { feed: FeedItem[] }) {
       <main className="home">
         <BreakingTicker />
         <div>
-          <HeroArticle />
+          <HeroArticle article={hero} />
           <div className="feed">
             {feed.map((item, i) => (
               <FeedCard
