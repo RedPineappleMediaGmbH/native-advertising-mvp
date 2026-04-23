@@ -54,7 +54,7 @@ const serif = { fontFamily: 'var(--font-source-serif), Georgia, serif' } as cons
 export default function AdvertorialA({ brand, onBack }: { brand: Brand; onBack: () => void }) {
   return (
     <div className="adv variant-a">
-      <BackBar brand={brand} onBack={onBack} />
+      <BackBar brand={brand} onBack={onBack} category="Reise" showNote />
       <AdvBanner />
       <div className="adv-wrap">
         <div className="adv-meta">
