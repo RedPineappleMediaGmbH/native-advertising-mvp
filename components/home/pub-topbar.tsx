@@ -40,9 +40,9 @@ export default function PubTopbar({ brand }: { brand: Brand }) {
             <span /><span /><span />
           </button>
 
-          <div className="pub-logo" style={{ fontFamily: 'var(--font-source-serif), Georgia, serif' }}>
+          <Link href="/" className="pub-logo" style={{ fontFamily: 'var(--font-source-serif), Georgia, serif', textDecoration: 'none', color: 'inherit' }}>
             {brand.logoMark}<span className="dot">.</span>
-          </div>
+          </Link>
           <div className="pub-date mobile-hide" suppressHydrationWarning>{todayDE()}</div>
           <nav className="pub-nav mobile-hide">
             {NAV_ITEMS.map(n => (
@@ -70,9 +70,9 @@ export default function PubTopbar({ brand }: { brand: Brand }) {
       {menuOpen && (
         <div className="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation">
           <div className="mobile-menu-header">
-            <div className="mobile-menu-logo" style={{ fontFamily: 'var(--font-source-serif), Georgia, serif' }}>
+            <Link href="/" className="mobile-menu-logo" style={{ fontFamily: 'var(--font-source-serif), Georgia, serif', textDecoration: 'none', color: 'inherit' }} onClick={() => setMenuOpen(false)}>
               {brand.logoMark}<span className="dot">.</span>
-            </div>
+            </Link>
             <button
               className="mobile-menu-close"
               onClick={() => setMenuOpen(false)}
