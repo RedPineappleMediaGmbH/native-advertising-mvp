@@ -16,6 +16,8 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
   return {
     title: `${label} — Tagesblick`,
     description: `Alle ${label}-Artikel auf Tagesblick.`,
+    alternates: { canonical: `/kategorie/${category}` },
+    openGraph: { type: 'website' as const },
   };
 }
 

@@ -1,6 +1,21 @@
+import type { Metadata } from 'next';
 import { getAllArticles } from '@/lib/articles';
 import HomeView from '@/components/home/home-view';
 import type { FeedItem } from '@/lib/types';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const articles = getAllArticles();
+  const hero = articles[0];
+  return {
+    alternates: { canonical: '/' },
+    openGraph: {
+      type: 'website',
+      ...(hero && {
+        images: [{ url: hero.image, width: 1200, height: 630, alt: hero.title }],
+      }),
+    },
+  };
+}
 
 function relativeTime(dateStr: string): string {
   const d = new Date(dateStr);
