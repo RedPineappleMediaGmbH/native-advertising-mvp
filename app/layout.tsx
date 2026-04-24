@@ -19,8 +19,14 @@ const sourceSerif = Source_Serif_4({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://tagesblick.net'),
   title: 'Tagesblick — Nachrichten & Hintergründe',
-  description: 'Native advertising MVP — fictional German news publisher',
+  description: 'Nachrichten, Hintergründe und Reportagen aus Deutschland und der Welt.',
+  openGraph: {
+    siteName: 'Tagesblick',
+    locale: 'de_DE',
+    type: 'website',
+  },
 };
 
 export const viewport: Viewport = {
