@@ -27,6 +27,9 @@ export const metadata: Metadata = {
     locale: 'de_DE',
     type: 'website',
   },
+  verification: {
+    google: 'F_6fCHQn7NQQyX4n2jKFFW-0InujfD5-CxdK1Ra1bUI',
+  },
 };
 
 export const viewport: Viewport = {
