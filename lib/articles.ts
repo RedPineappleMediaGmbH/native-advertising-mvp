@@ -10,6 +10,8 @@ export interface Article {
   slug: string;
   image: string;
   body: string;
+  sponsored?: boolean;
+  advertiser?: string;
 }
 
 const REQUIRED_FIELDS: (keyof Omit<Article, 'body'>)[] = [
@@ -39,6 +41,8 @@ export function parseArticleFile(filePath: string): Article {
     slug: data.slug,
     image: data.image,
     body: content.trim(),
+    ...(data.sponsored === true && { sponsored: true }),
+    ...(typeof data.advertiser === 'string' && data.advertiser && { advertiser: data.advertiser }),
   };
 }
 

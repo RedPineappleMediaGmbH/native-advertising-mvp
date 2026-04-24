@@ -5,6 +5,7 @@ import os from 'node:os';
 import { parseArticleFile, getAllArticles, getArticleBySlug } from './articles';
 
 const fixture = path.join(__dirname, 'fixtures/sample-article.mdx');
+const sponsoredFixture = path.join(__dirname, 'fixtures/sample-sponsored-article.mdx');
 
 describe('parseArticleFile', () => {
   it('parses frontmatter and body from a valid article', () => {
@@ -32,6 +33,18 @@ describe('parseArticleFile', () => {
     const article = parseArticleFile(tmp);
     expect(article.date).toBe('2026-04-20');
     fs.unlinkSync(tmp);
+  });
+
+  it('parses sponsored and advertiser fields', () => {
+    const article = parseArticleFile(sponsoredFixture);
+    expect(article.sponsored).toBe(true);
+    expect(article.advertiser).toBe('Airwander GmbH');
+  });
+
+  it('editorial article has no sponsored or advertiser field', () => {
+    const article = parseArticleFile(fixture);
+    expect(article.sponsored).toBeUndefined();
+    expect(article.advertiser).toBeUndefined();
   });
 });
 
