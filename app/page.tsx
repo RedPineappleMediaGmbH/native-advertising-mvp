@@ -29,6 +29,7 @@ export default function HomePage() {
   const articles = getAllArticles();
   const [hero, ...rest] = articles;
   const feedArticles = rest.slice(0, 5);
+  const sidebarArticles = rest.slice(5, 10);
 
   const feed: FeedItem[] = feedArticles.map(a => ({
     kicker: a.kicker,
@@ -53,5 +54,5 @@ export default function HomePage() {
     ? [...feed.slice(0, 2), sponsored, ...feed.slice(2)]
     : [...feed, sponsored];
 
-  return <HomeView feed={feedWithAd} hero={hero} />;
+  return <HomeView feed={feedWithAd} hero={hero} sidebarArticles={sidebarArticles} />;
 }

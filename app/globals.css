@@ -572,3 +572,11 @@ html, body { overflow-x: hidden; max-width: 100%; }
 .article-body li { margin: 6px 0; }
 .article-body strong { font-weight: 700; }
 .article-body a { color: var(--pub-accent); text-decoration: underline; text-underline-offset: 3px; }
+
+.side-item { transition: background-color 0.15s; cursor: pointer; }
+.side-item:hover { background-color: var(--line-2); }
+.side-item:hover .t { color: var(--pub-accent); }
+
+.side-ad { transition: opacity 0.2s; cursor: pointer; }
+.side-ad:hover { opacity: 0.92; }
+.side-ad:hover img { filter: brightness(1.05); transition: filter 0.2s; }

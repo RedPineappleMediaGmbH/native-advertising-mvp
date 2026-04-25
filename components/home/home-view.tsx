@@ -11,8 +11,17 @@ import type { FeedItem } from '@/lib/types';
 import type { Article } from '@/lib/articles';
 import Sidebar from '@/components/home/sidebar';
 import PubFooter from '@/components/home/pub-footer';
+import { NATIVE_AD_HREF } from '@/lib/constants';
 
-export default function HomeView({ feed, hero }: { feed: FeedItem[]; hero: Article }) {
+export default function HomeView({
+  feed,
+  hero,
+  sidebarArticles,
+}: {
+  feed: FeedItem[];
+  hero: Article;
+  sidebarArticles: Article[];
+}) {
   const router = useRouter();
   const { brand } = useBrand();
   useCtaToast();
@@ -29,12 +38,12 @@ export default function HomeView({ feed, hero }: { feed: FeedItem[]; hero: Artic
               <FeedCard
                 key={i}
                 item={item}
-                onOpenAdvertorial={() => router.push('/artikel/funf-europaische-stadte-die-sie-diesen-sommer-fur-unter-50-euro-erreichen-konnen')}
+                onOpenAdvertorial={() => router.push(NATIVE_AD_HREF)}
               />
             ))}
           </div>
         </div>
-        <Sidebar />
+        <Sidebar articles={sidebarArticles} />
       </main>
       <PubFooter brand={brand} />
     </>
