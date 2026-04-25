@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import type { Article } from '@/lib/articles';
-
-const ADVERTORIAL_HREF = '/artikel/funf-europaische-stadte-die-sie-diesen-sommer-fur-unter-50-euro-erreichen-konnen';
+import { NATIVE_AD_HREF } from '@/lib/constants';
 
 interface Props {
   articles: Article[];
@@ -26,7 +25,7 @@ export default function Sidebar({ articles }: Props) {
       </div>
 
       <Link
-        href={ADVERTORIAL_HREF}
+        href={NATIVE_AD_HREF}
         className="side-block side-ad"
         style={{ padding: 0, overflow: 'hidden', textDecoration: 'none', color: 'inherit', display: 'block' }}
       >

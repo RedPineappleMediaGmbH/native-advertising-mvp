@@ -11,6 +11,7 @@ import type { FeedItem } from '@/lib/types';
 import type { Article } from '@/lib/articles';
 import Sidebar from '@/components/home/sidebar';
 import PubFooter from '@/components/home/pub-footer';
+import { NATIVE_AD_HREF } from '@/lib/constants';
 
 export default function HomeView({
   feed,
@@ -37,7 +38,7 @@ export default function HomeView({
               <FeedCard
                 key={i}
                 item={item}
-                onOpenAdvertorial={() => router.push('/artikel/funf-europaische-stadte-die-sie-diesen-sommer-fur-unter-50-euro-erreichen-konnen')}
+                onOpenAdvertorial={() => router.push(NATIVE_AD_HREF)}
               />
             ))}
           </div>
