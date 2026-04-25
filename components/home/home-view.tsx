@@ -12,7 +12,15 @@ import type { Article } from '@/lib/articles';
 import Sidebar from '@/components/home/sidebar';
 import PubFooter from '@/components/home/pub-footer';
 
-export default function HomeView({ feed, hero }: { feed: FeedItem[]; hero: Article }) {
+export default function HomeView({
+  feed,
+  hero,
+  sidebarArticles,
+}: {
+  feed: FeedItem[];
+  hero: Article;
+  sidebarArticles: Article[];
+}) {
   const router = useRouter();
   const { brand } = useBrand();
   useCtaToast();
@@ -34,7 +42,7 @@ export default function HomeView({ feed, hero }: { feed: FeedItem[]; hero: Artic
             ))}
           </div>
         </div>
-        <Sidebar />
+        <Sidebar articles={sidebarArticles} />
       </main>
       <PubFooter brand={brand} />
     </>
