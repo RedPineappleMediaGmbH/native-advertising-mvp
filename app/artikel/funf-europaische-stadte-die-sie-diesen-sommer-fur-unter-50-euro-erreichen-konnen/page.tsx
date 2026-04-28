@@ -42,7 +42,7 @@ export default function AdvertorialPage() {
         ? <AdvertorialA brand={brand} onBack={handleBack} />
         : <AdvertorialB brand={brand} onBack={handleBack} />
       }
-      <div className="adv">
+      <div className="adv-disclosure-section">
         <div className="adv-wrap">
           <AiDisclosure />
         </div>

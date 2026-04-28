@@ -280,6 +280,10 @@ button { font-family: inherit; cursor: pointer; }
   color: var(--ink-2);
   font-weight: 700;
 }
+.adv-disclosure-section {
+  background: #fff;
+  padding: 0 0 8px;
+}
 
 .adv p.body {
   font-size: 18px; line-height: 1.65; color: var(--ink-2);
