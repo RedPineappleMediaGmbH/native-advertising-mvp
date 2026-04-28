@@ -63,16 +63,49 @@ button { font-family: inherit; cursor: pointer; }
 }
 .breaking {
   grid-column: 1 / -1;
-  display: flex; align-items: center; gap: 14px;
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px;
   background: #fff; border: 1px solid var(--line); border-radius: 6px;
   padding: 10px 14px; font-size: 13px;
+}
+.breaking-head {
+  display: flex; align-items: center; gap: 10px; min-width: 0;
 }
 .breaking .tag {
   background: #c8102e; color: #fff; padding: 4px 8px; border-radius: 3px;
   font-size: 10px; font-weight: 800; letter-spacing: 0.08em;
   white-space: nowrap; flex-shrink: 0;
 }
-.breaking .ticker { color: var(--ink-2); font-weight: 500; }
+.breaking .stand {
+  color: var(--muted-2); font-size: 11px; white-space: nowrap;
+}
+.breaking .ticker {
+  color: var(--ink-2); font-weight: 600;
+  display: flex; align-items: center; gap: 10px; min-width: 0;
+  animation: ticker-fade .28s ease both;
+}
+.breaking .ticker:hover .ticker-text { color: var(--pub-accent); }
+.ticker-time {
+  color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.ticker-label {
+  color: var(--pub-accent); font-size: 11px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.04em; white-space: nowrap;
+}
+.ticker-text {
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; transition: color .2s ease;
+}
+.ticker-dots { display: flex; gap: 5px; align-items: center; }
+.ticker-dots span {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--line); transition: background .2s ease, transform .2s ease;
+}
+.ticker-dots span.active {
+  background: #c8102e; transform: scale(1.25);
+}
+@keyframes ticker-fade {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 /* Hero article */
 .hero {
@@ -539,7 +572,14 @@ html, body { overflow-x: hidden; max-width: 100%; }
   .feed { grid-template-columns: 1fr; gap: 14px; }
 
   /* Breaking ticker — tighter */
-  .breaking { padding: 8px 12px; }
+  .breaking {
+    grid-template-columns: 1fr auto;
+    padding: 8px 12px;
+    gap: 8px 12px;
+  }
+  .breaking-head { grid-column: 1 / -1; }
+  .breaking .ticker { gap: 8px; }
+  .ticker-label { display: none; }
 
   /* Footer — 2 columns */
   footer.pub-footer .inner {
@@ -594,6 +634,11 @@ html, body { overflow-x: hidden; max-width: 100%; }
   /* Topbar */
   .pub-logo { font-size: 20px; }
   .pub-topbar-inner { height: 48px; }
+
+  /* Breaking ticker */
+  .breaking-head { justify-content: space-between; }
+  .breaking .stand { font-size: 10px; }
+  .ticker-dots { display: none; }
 
   /* Hero */
   .hero-body h1 { font-size: 21px; }

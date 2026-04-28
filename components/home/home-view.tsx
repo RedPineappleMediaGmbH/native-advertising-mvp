@@ -12,15 +12,20 @@ import type { Article } from '@/lib/articles';
 import Sidebar from '@/components/home/sidebar';
 import PubFooter from '@/components/home/pub-footer';
 import { NATIVE_AD_HREF } from '@/lib/constants';
+import type { AktuellItem } from '@/lib/aktuell';
 
 export default function HomeView({
   feed,
   hero,
   sidebarArticles,
+  aktuellItems,
+  aktuellStand,
 }: {
   feed: FeedItem[];
   hero: Article;
   sidebarArticles: Article[];
+  aktuellItems: AktuellItem[];
+  aktuellStand: string;
 }) {
   const router = useRouter();
   const { brand } = useBrand();
@@ -30,7 +35,7 @@ export default function HomeView({
     <>
       <PubTopbar brand={brand} />
       <main className="home">
-        <BreakingTicker />
+        <BreakingTicker items={aktuellItems} stand={aktuellStand} />
         <div>
           <HeroArticle article={hero} />
           <div className="feed">
