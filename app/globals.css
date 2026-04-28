@@ -348,12 +348,67 @@ footer.pub-footer {
 }
 footer.pub-footer .inner {
   max-width: 1240px; margin: 0 auto; padding: 0 24px;
-  display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px;
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 32px;
 }
 footer.pub-footer h6 { color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 14px; }
 footer.pub-footer a { display: block; padding: 4px 0; color: #9ba4af; font-size: 13px; }
 footer.pub-footer .logo { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 10px; }
 footer.pub-footer .legal { grid-column: 1 / -1; margin-top: 20px; padding-top: 20px; border-top: 1px solid #222a35; font-size: 11px; color: #6c7480; display: flex; justify-content: space-between; }
+footer.pub-footer .legal a { display: inline; padding: 0; font-size: inherit; color: inherit; }
+footer.pub-footer .legal a:hover { color: #9ba4af; }
+
+/* ---------- Info pages ---------- */
+.info-page {
+  background: #fff;
+  min-height: 70vh;
+}
+.info-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 56px 24px 20px;
+}
+.info-eyebrow {
+  color: var(--pub-accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+.info-title {
+  color: var(--ink);
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: 40px;
+  line-height: 1.1;
+  margin: 0 0 16px;
+}
+.info-intro {
+  color: var(--ink-2);
+  font-size: 18px;
+  line-height: 1.6;
+  margin: 0 0 34px;
+}
+.info-sections {
+  border-top: 1px solid var(--line);
+}
+.info-sections section {
+  border-bottom: 1px solid var(--line);
+  padding: 26px 0;
+}
+.info-sections h2 {
+  color: var(--ink);
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: 24px;
+  line-height: 1.2;
+  margin: 0 0 12px;
+}
+.info-sections p {
+  color: var(--ink-2);
+  font-size: 16px;
+  line-height: 1.65;
+  margin: 0 0 12px;
+}
+.info-sections p:last-child { margin-bottom: 0; }
 
 /* ---------- Tweaks panel ---------- */
 #tweaks {
@@ -496,6 +551,10 @@ html, body { overflow-x: hidden; max-width: 100%; }
 
   /* Advertorial */
   .adv-wrap { padding: 0 16px; }
+  .info-wrap { padding: 40px 16px 10px; }
+  .info-title { font-size: 32px; }
+  .info-intro { font-size: 16px; }
+  .info-sections h2 { font-size: 21px; }
   .sponsor-strip-inner { padding: 8px 16px; max-width: 100%; }
   .back-bar-inner { padding: 8px 16px; }
 

@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { getAllArticles } from '@/lib/articles';
 
 const BASE = 'https://tagesblick.net';
+const STATIC_PAGES = ['ueber-uns', 'werben', 'kontakt', 'impressum', 'datenschutz'];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const articles = getAllArticles();
@@ -9,6 +10,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     { url: BASE, lastModified: new Date(), priority: 1.0 },
+    ...STATIC_PAGES.map(page => ({
+      url: `${BASE}/${page}`,
+      lastModified: new Date(),
+      priority: 0.4,
+    })),
     ...categories.map(cat => ({
       url: `${BASE}/kategorie/${cat}`,
       priority: 0.5,
