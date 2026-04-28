@@ -4,6 +4,7 @@ import BackBar from '@/components/advertorial/back-bar';
 import { getAllSlugs, getArticleBySlug } from '@/lib/articles';
 import { BRANDS } from '@/components/brands';
 import ArticleJsonLd from '@/components/seo/article-json-ld';
+import PubFooter from '@/components/home/pub-footer';
 
 export async function generateStaticParams() {
   return getAllSlugs().map(slug => ({ slug }));
@@ -37,24 +38,27 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const serif = { fontFamily: 'var(--font-source-serif), Georgia, serif' } as const;
 
   return (
-    <div className="adv">
+    <>
       <ArticleJsonLd article={article} url={`https://tagesblick.net/artikel/${slug}`} />
-      <BackBar brand={brand} href="/" category={article.kicker} />
-      <div className="adv-wrap">
-        <div className="adv-meta">
-          <span className="kicker">{article.kicker}</span>
-          <span>·</span>
-          <span>{new Date(article.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
-        </div>
-        <h1 className="adv-title" style={serif}>{article.title}</h1>
-        <p className="lead" style={serif}>{article.dek}</p>
-        <figure style={{ margin: '28px 0 24px' }}>
-          <img src={article.image} alt={article.title} style={{ width: '100%', display: 'block', borderRadius: 3 }} />
-        </figure>
-        <div className="article-body" style={serif}>
-          <MDXRemote source={article.body} />
+      <div className="adv">
+        <BackBar brand={brand} href="/" category={article.kicker} />
+        <div className="adv-wrap">
+          <div className="adv-meta">
+            <span className="kicker">{article.kicker}</span>
+            <span>·</span>
+            <span>{new Date(article.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+          </div>
+          <h1 className="adv-title" style={serif}>{article.title}</h1>
+          <p className="lead" style={serif}>{article.dek}</p>
+          <figure style={{ margin: '28px 0 24px' }}>
+            <img src={article.image} alt={article.title} style={{ width: '100%', display: 'block', borderRadius: 3 }} />
+          </figure>
+          <div className="article-body" style={serif}>
+            <MDXRemote source={article.body} />
+          </div>
         </div>
       </div>
-    </div>
+      <PubFooter brand={brand} />
+    </>
   );
 }

@@ -7,6 +7,7 @@ import { useCtaToast } from '@/hooks/use-cta-toast';
 import AdvertorialA from '@/components/advertorial/advertorial-a';
 import AdvertorialB from '@/components/advertorial/advertorial-b';
 import StickyCta from '@/components/advertorial/sticky-cta';
+import PubFooter from '@/components/home/pub-footer';
 
 export default function AdvertorialPage() {
   const router = useRouter();
@@ -44,6 +45,7 @@ export default function AdvertorialPage() {
         visible={stickyVisible && state.stickyCta === 'on' && !stickyClosed}
         onClose={() => { setStickyClosed(true); setStickyVisible(false); }}
       />
+      <PubFooter brand={brand} />
     </>
   );
 }
