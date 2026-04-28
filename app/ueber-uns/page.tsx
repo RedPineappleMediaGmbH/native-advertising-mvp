@@ -26,6 +26,7 @@ export default function UeberUnsPage() {
           body: [
             'Tagesblick befindet sich im Aufbau. Deshalb halten wir diese Seite bewusst knapp und verzichten auf Angaben, die noch nicht belastbar sind.',
             'Werbliche Beiträge werden als Anzeige gekennzeichnet. Redaktionelle Inhalte und kommerzielle Inhalte sollen für Leserinnen und Leser klar unterscheidbar bleiben.',
+            'Tagesblick nutzt KI-gestützte Werkzeuge zur Themenrecherche, Texterstellung, Bildgenerierung und redaktionellen Vorbereitung. Inhalte werden vor Veröffentlichung redaktionell geprüft.',
           ],
         },
       ]}

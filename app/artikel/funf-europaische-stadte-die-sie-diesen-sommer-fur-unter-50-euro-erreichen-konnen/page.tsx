@@ -8,6 +8,7 @@ import AdvertorialA from '@/components/advertorial/advertorial-a';
 import AdvertorialB from '@/components/advertorial/advertorial-b';
 import StickyCta from '@/components/advertorial/sticky-cta';
 import PubFooter from '@/components/home/pub-footer';
+import AiDisclosure from '@/components/home/ai-disclosure';
 
 export default function AdvertorialPage() {
   const router = useRouter();
@@ -41,6 +42,11 @@ export default function AdvertorialPage() {
         ? <AdvertorialA brand={brand} onBack={handleBack} />
         : <AdvertorialB brand={brand} onBack={handleBack} />
       }
+      <div className="adv">
+        <div className="adv-wrap">
+          <AiDisclosure />
+        </div>
+      </div>
       <StickyCta
         visible={stickyVisible && state.stickyCta === 'on' && !stickyClosed}
         onClose={() => { setStickyClosed(true); setStickyVisible(false); }}

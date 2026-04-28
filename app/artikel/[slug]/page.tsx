@@ -5,6 +5,7 @@ import { getAllSlugs, getArticleBySlug } from '@/lib/articles';
 import { BRANDS } from '@/components/brands';
 import ArticleJsonLd from '@/components/seo/article-json-ld';
 import PubFooter from '@/components/home/pub-footer';
+import AiDisclosure from '@/components/home/ai-disclosure';
 
 export async function generateStaticParams() {
   return getAllSlugs().map(slug => ({ slug }));
@@ -53,6 +54,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <figure style={{ margin: '28px 0 24px' }}>
             <img src={article.image} alt={article.title} style={{ width: '100%', display: 'block', borderRadius: 3 }} />
           </figure>
+          <AiDisclosure />
           <div className="article-body" style={serif}>
             <MDXRemote source={article.body} />
           </div>

@@ -267,6 +267,20 @@ button { font-family: inherit; cursor: pointer; }
 }
 .adv-hero-cap { font-size: 12px; color: var(--muted); margin: 0 0 28px; line-height: 1.5; }
 
+.ai-disclosure {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+  margin: 0 0 24px;
+  padding: 12px 0;
+}
+.ai-disclosure strong {
+  color: var(--ink-2);
+  font-weight: 700;
+}
+
 .adv p.body {
   font-size: 18px; line-height: 1.65; color: var(--ink-2);
   margin: 0 0 20px;

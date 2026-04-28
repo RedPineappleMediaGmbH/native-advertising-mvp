@@ -19,3 +19,13 @@ test('renders the shared footer on generated article pages', async () => {
 
   expect(hasComponentNamed(element, 'PubFooter')).toBe(true);
 });
+
+test('renders an AI transparency notice on generated article pages', async () => {
+  const element = await ArticlePage({
+    params: Promise.resolve({
+      slug: 'lichter-filmfest-startet-in-frankfurt-wenn-kino-die-kunst-befragt',
+    }),
+  });
+
+  expect(hasComponentNamed(element, 'AiDisclosure')).toBe(true);
+});
