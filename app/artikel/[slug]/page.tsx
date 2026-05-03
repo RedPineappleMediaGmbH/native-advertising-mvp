@@ -53,6 +53,22 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <p className="lead" style={serif}>{article.dek}</p>
           <figure style={{ margin: '28px 0 24px' }}>
             <img src={article.image} alt={article.title} style={{ width: '100%', display: 'block', borderRadius: 3 }} />
+            {article.imageCredit && (
+              <figcaption style={{ fontSize: 12, color: '#666', marginTop: 6 }}>
+                Foto:{' '}
+                {article.imageCreditUrl ? (
+                  <a href={article.imageCreditUrl} target="_blank" rel="noopener noreferrer nofollow" style={{ color: '#666' }}>
+                    {article.imageCredit}
+                  </a>
+                ) : (
+                  article.imageCredit
+                )}
+                {' '}/{' '}
+                <a href="https://unsplash.com/?utm_source=tagesblick&utm_medium=referral" target="_blank" rel="noopener noreferrer nofollow" style={{ color: '#666' }}>
+                  Unsplash
+                </a>
+              </figcaption>
+            )}
           </figure>
           <AiDisclosure />
           <div className="article-body" style={serif}>

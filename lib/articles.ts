@@ -10,6 +10,8 @@ export interface Article {
   slug: string;
   image: string;
   body: string;
+  imageCredit?: string;
+  imageCreditUrl?: string;
   sponsored?: boolean;
   advertiser?: string;
 }
@@ -41,6 +43,8 @@ export function parseArticleFile(filePath: string): Article {
     slug: data.slug,
     image: data.image,
     body: content.trim(),
+    ...(typeof data.imageCredit === 'string' && data.imageCredit && { imageCredit: data.imageCredit }),
+    ...(typeof data.imageCreditUrl === 'string' && data.imageCreditUrl && { imageCreditUrl: data.imageCreditUrl }),
     ...(data.sponsored === true && { sponsored: true }),
     ...(typeof data.advertiser === 'string' && data.advertiser && { advertiser: data.advertiser }),
   };
